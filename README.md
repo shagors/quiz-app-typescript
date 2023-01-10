@@ -6,7 +6,7 @@
     * You can use it only download it
     * design with styled components
 
-![preview img](/cap1.PNG)
-![preview img](/cap2.PNG)
-![preview img](/cap3.PNG)
-![preview img](/cap4.PNG)
+![preview img](/Cap1.PNG)
+![preview img](/Cap2.PNG)
+![preview img](/Cap3.PNG)
+![preview img](/Cap4.PNG)
