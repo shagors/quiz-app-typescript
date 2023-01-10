@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import QuestionCard from './components/QuestionCard';
 
 import { QuestionState, Difficulty, fetchQuizQuestions} from './API';
+import { GlobalStyle, Wrapper } from './App.styles';
 
-type AnswerObject = {
+export type AnswerObject = {
   question: string;
   answer: string;
   correct: boolean;
@@ -39,15 +40,40 @@ const App = () => {
   };
 
   const checkAnswer = (e: React.MouseEvent<HTMLButtonElement>) => {
-
-  }
+    if(!gameOver){
+      // user answer
+      const answer = e.currentTarget.value;
+      // check answer
+      const correct = questions[number].correct_answer === answer;
+      // Add score if answer correct
+      if(correct) setScore(prev => prev +1);
+      // save answer array
+      const answerObject = {
+        question: questions[number].question,
+        answer,
+        correct,
+        correctAnswer: questions[number].correct_answer,
+      };
+      setUserAnswers(prev => [...prev, answerObject]);
+    }
+  };
 
   const nextQuestion = () => {
+    // next question
+    const nextQuestion = number + 1;
+    if(nextQuestion === TOTAL_QUESTIONS){
+      setGameOver(true);
+    }else{
+      setNumber(nextQuestion);
+    }
+  };
 
-  }
+
 
   return (
-    <div className="">
+    <>
+    <GlobalStyle />
+    <Wrapper>
       <h1>Quiz App</h1>
       {
         gameOver || userAnswers.length === TOTAL_QUESTIONS ? (
@@ -55,7 +81,7 @@ const App = () => {
         ) : null
       }
 
-      {!gameOver ? <p className='score'>Score:</p> : null}
+      {!gameOver ? <p className='score'>Score: {score}</p> : null}
 
       {loading && <p className=''>Loading Questions ....</p>}
 
@@ -72,7 +98,8 @@ const App = () => {
       {!gameOver && !loading && userAnswers.length === number + 1 && number !== TOTAL_QUESTIONS - 1 ? (
         <button className='next' onClick={nextQuestion}>Next Question</button>
       ) : null}
-    </div>
+    </Wrapper>
+    </>
   );
 }
 
